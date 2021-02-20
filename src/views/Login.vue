@@ -10,7 +10,7 @@
         {{ email + password }}
       </div>
       <h1 class="text-2xl font-bold text-left ml-5 mb-8">Masuk</h1>
-      <form class="login" action="" method="post">
+      <form class="login" action="" method="POST" @submit.prevent="login">
         <div class="text-left">
           <t-input-group label="Email atau Nomor Handphone" class="mx-5 my-3">
             <t-input
@@ -43,7 +43,7 @@
             </div>
           </div>
           <div class="mt-6 mx-5 mb-6">
-            <t-button type="submit" class="w-full" @click="post()">Masuk</t-button>
+            <t-button type="submit" class="w-full">Masuk</t-button>
           </div>
 
           <div class="mx-5 mb-8 text-sm">
@@ -64,7 +64,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   data(){
     return {
@@ -77,26 +76,18 @@ export default {
     login(){
       let email = this.email;
       let password = this.password;
-      this.$store.dispatch('login', { email, password })
-        .then(() => this.$router.push('/'))
+      this.$store.dispatch('post', 'http://express.percobaanekopi.xyz/user/login', {email, password})
+        .then(() => this.$router.push('/tes'))
         .catch(err => console.log(err))
     },
 
-    async post(url = 'http://express.percobaanekopi.xyz/user/login'){
-    let data = JSON.stringify({"email":"kukur@gmail.com","password":"kukur"})
-
-    let headers = { 'Authorization' : 'Bearer' + sessionStorage.getItem('token') }
-    let res;
-    await axios.post(url, data, {headers: headers})
-      .then( resp => {
-        res = JSON.stringify(resp.data)
-        
-      }).catch(err => {
-        res = err
-      })
-      console.log(res)
-      return res
-    },
+    // post(){
+    //   let email = this.email;
+    //   let password = this.password;
+    //   this.$store.dispatch('post', 'http://express.percobaanekopi.xyz/user/login', {email, password})
+    //     .then(() => this.$router.push('/tes'))
+    //     .catch(err => console.log(err))
+    // }
   }
 }
 </script>

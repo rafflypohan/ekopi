@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     status: '',
-    // token: sessionStorage.getItem('token') || '',
+    token: sessionStorage.getItem('token') || '',
+    // token: '',
     user: {},
   },
 
@@ -35,21 +36,31 @@ export default new Vuex.Store({
   },
 
   actions: {
-    async post(url){
-    let data = JSON.stringify({"email":"kukur@gmail.com","password":"kukur"})
-
-    let headers = { 'Authorization' : 'Bearer' + sessionStorage.getItem('token') }
-    let res;
-    await axios.post(url, data, {headers: headers})
-      .then( resp => {
-        res = JSON.stringify(resp.data)
-        
-      }).catch(err => {
-        res = err
+    simplePost(){
+      const data = {
+        email: 'kukur@gmail.com',
+        password: 'kukur',
+      }
+      let headers = {'Authorization' : 'Bearer ' + sessionStorage.getItem('token')}
+      axios.post('http://express.percobaanekopi.xyz/user/login', data, {headers: headers})
+      .then(response => {
+        this.state.token = response.data.token
       })
-      console.log(res)
-      return res
     },
+
+    async post(url, data){
+      let headers = {
+        'Authorization':'Bearer ' + sessionStorage.getItem('token')
+      }
+      await axios.post(url, data, {headers: headers})
+      .then(resp => {
+        this.state.token = resp.data.token
+      }).catch(err => {
+        console.log(err.resp)
+      })
+      
+    },
+
     login({commit}, user){
       return Promise((resolve, reject) => {
         commit('auth_request')
@@ -58,7 +69,7 @@ export default new Vuex.Store({
             const token = resp.data.token;
             const user = resp.data.user;
             sessionStorage.setItem('token', token);
-            axios.defaults.headers.common['Authorization'] = "Bearer" + token;
+            axios.defaults.headers.common['Authorization'] = "Bearer " + token;
             commit('auth_success', token, user);
             resolve(resp)
           })
