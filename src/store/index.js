@@ -1,111 +1,74 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import axios from 'axios'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import axios from 'axios';
 
-Vue.use(Vuex)
+axios.defaults.baseURL = 'http://express.percobaanekopi.xyz';
+
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     status: '',
     token: sessionStorage.getItem('token') || '',
-    // token: '',
     user: {},
+    message: '',
   },
 
   mutations: {
-    auth_request(state){
-      state.status = 'loading'
+    AUTH_REQUEST(state) {
+      state.status = 'loading';
     },
-    auth_success(state, token, user){
+    AUTH_SUCCESS(state, payload) {
       state.status = 'success';
-      state.token = token;
-      state.user = user;
+      state.token = payload.token;
+      state.user = payload.user;
+      state.message = payload.message;
     },
-    auth_error(state){
+    AUTH_ERROR(state, message) {
       state.status = 'error';
+      state.message = message;
     },
-    logout(state){
+    logout(state) {
       state.status = '';
-      state.token = ''
+      state.token = '';
     },
   },
 
   getters: {
-    isLoggedIn: state => !!state.token,
-    authStatus: state => state
+    isLoggedIn: (state) => !!state.token,
+    authStatus: (state) => state,
   },
 
   actions: {
-    simplePost(){
-      const data = {
-        email: 'kukur@gmail.com',
-        password: 'kukur',
-      }
-      let headers = {'Authorization' : 'Bearer ' + sessionStorage.getItem('token')}
-      axios.post('http://express.percobaanekopi.xyz/user/login', data, {headers: headers})
-      .then(response => {
-        this.state.token = response.data.token
-      })
+    async post({ commit }, data) {
+      commit('AUTH_REQUEST');
+      let headers = { Authorization: 'Bearer ' + sessionStorage.getItem('token') };
+      return await axios
+        .post(data['url'], data['data'], { headers: headers })
+        .then((resp) => {
+          if (resp.data.success === true) {
+            sessionStorage.setItem('token', resp.data.token);
+            commit('AUTH_SUCCESS', resp.data);
+            Promise.resolve(resp);
+          } else {
+            commit('AUTH_ERROR', resp.data.message);
+            sessionStorage.removeItem('token');
+            Promise.resolve(resp);
+          }
+        })
+        .catch((err) => {
+          commit('AUTH_ERROR', this.resp.data.message);
+          sessionStorage.removeItem('token');
+          Promise.reject(err);
+        });
     },
-
-    async post(url, data){
-      let headers = {
-        'Authorization':'Bearer ' + sessionStorage.getItem('token')
-      }
-      await axios.post(url, data, {headers: headers})
-      .then(resp => {
-        this.state.token = resp.data.token
-      }).catch(err => {
-        console.log(err.resp)
-      })
-      
-    },
-
-    login({commit}, user){
-      return Promise((resolve, reject) => {
-        commit('auth_request')
-        axios.post('http://express.percobaanekopi.xyz/user/login', user)
-          .then(resp => {
-            const token = resp.data.token;
-            const user = resp.data.user;
-            sessionStorage.setItem('token', token);
-            axios.defaults.headers.common['Authorization'] = "Bearer " + token;
-            commit('auth_success', token, user);
-            resolve(resp)
-          })
-          .catch(err => {
-            commit('auth_error');
-            sessionStorage.removeItem('token')
-            reject(err)
-          })
-      })
-    },
-    register({commit}, user){
-      return new Promise((resolve, reject) => {
-        commit('auth_request');
-        axios.post('http://express.percobaanekopi.xyz/user', user)
-          .then(resp => {
-            const token = resp.data.token;
-            const user = resp.data.user;
-            sessionStorage.setItem('token', token)
-            axios.defaults.headers.common['Authorization'] = token
-            commit('auth_success', token, user)
-            resolve(resp)
-          })
-          .catch(err => {
-            commit('auth_error', err);
-            sessionStorage.removeItem('token')
-            reject(err)
-          })
-      })
-    },
-    logout({commit}){
+    logout({ commit }) {
       return new Promise((resolve) => {
         commit('logout');
-        localStorage.removeItem('token')
-        delete axios.defaults.headers.common['Authorization']
-        resolve()
-      })
-    }
-  }
-})
+        localStorage.removeItem('token');
+        delete axios.defaults.headers.common['Authorization'];
+        resolve();
+      });
+    },
+  },
+});

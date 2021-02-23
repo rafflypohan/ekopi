@@ -6,95 +6,98 @@
           <img class="mx-auto" src="../assets/img/Logo.png" alt="Logo eKopi" />
         </router-link>
       </div>
-      <h1 class="text-2xl font-bold text-left ml-5 mb-8">Daftar</h1>
-      <form action="" method="post">
-        <div class="text-left">
-          <t-input-group label="Nama Lengkap" class="mx-5 my-3">
-            <t-input v-model="nama"></t-input>
-          </t-input-group>
+      <h1 class="text-2xl font-bold text-left ml-5 mb-6">Daftar</h1>
+      <template v-if="$store.state.status === 'error'">
+        <t-alert show variant="danger" class="capitalize mx-5 -mt-3 mb-4" :dismissible=false>
+        {{ $store.state.message }}
+      </t-alert>
+      </template>
+      <ValidationObserver v-slot="{ passes }">
+        <form action="" @submit.prevent="passes(register)">
+          <div class="text-left">
+            <ValidationProvider name="Nama Lengkap" rules="required" v-slot="{ errors }">
+              <t-input-group label="Nama Lengkap" class="mx-5 my-3">
+                <t-input :variant="errors[0] ? 'danger' : ''" v-model="nama" />
+                <span class="block text-sm text-red-500"> {{ errors[0] }} </span>
+              </t-input-group>
+            </ValidationProvider>
 
-          <t-input-group
-            label="Email"
-            class="mx-5 my-3"
-            feedback="contoh: example@email.com"
-          >
-            <t-input type="email" v-model="email"></t-input>
-          </t-input-group>
+            <ValidationProvider name="Email" rules="required|email" v-slot="{ errors }">
+              <t-input-group label="Email" class="mx-5 my-3" feedback="contoh: example@email.com">
+                <t-input :variant="errors[0] ? 'danger' : ''" type="email" v-model="email" />
+                <span class="block text-sm text-red-500"> {{ errors[0] }} </span>
+              </t-input-group>
+            </ValidationProvider>
 
-          <t-input-group
-            label="Nomor Handphone"
-            class="mx-5 my-3"
-            feedback="contoh: 08123456789 atau +628123456789"
-          >
-            <t-input
-              type="tel"
-              pattern="^(^\+62\s?|^0)(\d{3,4}-?){2}\d{3,4}$"
-              v-model="noHp"
-            ></t-input>
-          </t-input-group>
+            <ValidationProvider name="Password" rules="required|min:8" v-slot="{ errors }" vid="pass">
+              <t-input-group label="Password" class="mx-5 my-6">
+                <t-input :variant="errors[0] ? 'danger' : ''" class="" type="password" v-model="password" />
+                <span class="block text-sm text-red-500"> {{ errors[0] }} </span>
+              </t-input-group>
+            </ValidationProvider>
 
-          <t-input-group label="Password" class="mx-5 my-6">
-            <t-input class="" type="password" v-model="password"></t-input>
-          </t-input-group>
+            <ValidationProvider name="Konfrimasi Password" rules="required|confirmed:pass" v-slot="{ errors }">
+              <t-input-group label="Konfirmasi Password" class="mx-5 my-6">
+                <t-input :variant="errors[0] ? 'danger' : ''" class="" type="password" v-model="password_confirm" />
+                <span class="block text-sm text-red-500"> {{ errors[0] }} </span>
+              </t-input-group>
+            </ValidationProvider>
 
-          <t-input-group label="Konfirmasi Password" class="mx-5 my-6">
-            <t-input
-              class=""
-              type="password"
-              v-model="password_confirm"
-            ></t-input>
-          </t-input-group>
+            <div class="mt-6 mx-5 mb-6">
+              <t-button type="submit" class="w-full">Daftar</t-button>
+            </div>
 
-          <div class="mt-6 mx-5 mb-6">
-            <t-button type="submit" class="w-full" @click="register()"
-              >Daftar</t-button
-            >
+            <div class="mx-5 mb-8 text-sm">
+              <p>
+                Sudah punya akun?
+                <router-link class="text-brown-500 hover:underline" to="/login" tag="a">Login disini</router-link>
+              </p>
+            </div>
           </div>
-          
-          <div class="mx-5 mb-8 text-sm">
-            <p>
-              Sudah punya akun?
-              <router-link
-                class="text-yellow-900 hover:underline"
-                to="/login"
-                tag="a"
-                >Login disini</router-link
-              >
-            </p>
-          </div>
-        </div>
-      </form>
+        </form>
+      </ValidationObserver>
     </t-card>
   </div>
 </template>
 
 <script>
 
-export default{
-  data(){
-    return{
-      nama: 'ya kukur',
-      email: 'kukur@gmail.com',
-      noHp: '0812345678910',
-      password: 'kukur',
-      password_confirm: 'kukur'
-    }
+export default {
+  data() {
+    return {
+      nama: '',
+      email: '',
+      password: '',
+      password_confirm: '',
+    };
   },
-  methods:{ 
-    register(){
-      let data = {
-        name: this.nama,
-        email: this.email,
-        noHp: this.noHp,
-        password: this.password,
-        password_confirm: this.password_confirm
-      };
-      this.$store.dispatch('register', data)
-        .then(() => this.$router.push('/'))
-        .catch(err => console.log(err))
-    }
-  }
-}
+  methods: {
+    register() {
+      let nama = this.nama;
+      let email = this.email;
+      let noHp = this.noHp;
+      let password = this.password;
+      let password_confirm = this.password_confirm;
+      this.$store
+        .dispatch('post', {
+          url: '/user',
+          data: {
+            nama: nama,
+            email: email,
+            noHp: noHp,
+            password: password,
+            password_confirm: password_confirm,
+          },
+        })
+        .then(() => {
+          if(this.$store.state.status === 'success'){
+            this.$router.push('/login')
+          }
+        })
+        .catch((err) => console.log(err));
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

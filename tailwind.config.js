@@ -3,22 +3,24 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},
-    backgroundColor: theme => ({
+    backgroundColor: (theme) => ({
       ...theme('colors'),
-      'primary': '#966213',
-      'primary-600': '#855400',
+      'brown-300': '#C17D18',
+      'brown-400': '#AC6F15',
+      'brown-500': '#966213',
+      'brown-600': '#805310',
     }),
     // textColor: theme => theme('colors'),
-    textColor: theme => ({
+    textColor: (theme) => ({
       ...theme('colors'),
-      'primary': '#966213'
-    })
+      'brown-300': '#C17D18',
+      'brown-400': '#AC6F15',
+      'brown-500': '#966213',
+      'brown-600': '#805310',
+    }),
   },
   variants: {
     extend: {},
-    
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-  ],
-}
+  plugins: [require('@tailwindcss/forms')],
+};
