@@ -15,7 +15,7 @@
       </template>
 
       <template v-else-if="$store.state.status === 'error'">
-        <t-alert variant="danger" class="capitalize mx-5 -mt-3 mb-4" show :dismissible=false>
+        <t-alert variant="danger" class="capitalize mx-5 -mt-3 mb-4" show :dismissible="false">
           {{ $store.state.message }}
         </t-alert>
       </template>
@@ -24,21 +24,21 @@
         <form class="login" @submit.prevent="handleSubmit(login)">
           <div class="text-left">
             <ValidationProvider name="Email" rules="required|email" v-slot="{ errors }">
-              <t-input-group label="Email" class="mx-5 my-3">
+              <t-input-group :variant="errors[0] ? 'danger' : ''" label="Email" class="mx-5 my-3">
                 <t-input :variant="errors[0] ? 'danger' : ''" v-model="email" type="email" class="" />
                 <span class="block text-sm text-red-500"> {{ errors[0] }} </span>
               </t-input-group>
             </ValidationProvider>
 
             <ValidationProvider name="Password" rules="required" v-slot="{ errors }">
-              <t-input-group label="Password" class="mx-5 my-6">
+              <t-input-group :variant="errors[0] ? 'danger' : ''" label="Password" class="mx-5 my-6">
                 <t-input :variant="errors[0] ? 'danger' : ''" v-model="password" class="" type="password" />
                 <span class="block text-sm text-red-500"> {{ errors[0] }} </span>
               </t-input-group>
             </ValidationProvider>
 
             <div class="flex justify-between mx-5">
-              <div class="order-first">
+              <div class="order-first ">
                 <t-checkbox id="remember_me" class="mr-3"></t-checkbox>
                 <label for="remember_me" class="text-sm">Remember Me</label>
               </div>
@@ -51,7 +51,11 @@
               </div>
             </div>
             <div class="mt-6 mx-5 mb-6">
-              <t-button type="submit" class="w-full font-medium">Masuk</t-button>
+              <t-button type="submit" class="w-full font-medium" :class="$store.state.status == 'loading' ? 'cursor-not-allowed' : ''" :disabled="$store.state.status == 'loading' ? true : false" >
+                <span v-if="$store.state.status == 'loading'"><img class="mx-auto inline" src="@/assets/img/spinner.svg" alt=""/></span>
+                <span v-else>Masuk</span>
+              </t-button>
+              <br />
             </div>
 
             <div class="mx-5 mb-8 text-sm">
@@ -87,12 +91,13 @@ export default {
           data: { email: email, password: password },
         })
         .then(() => {
-          if(this.$store.state.status === 'success'){
-            this.$router.push('/tes')
+          if (this.$store.state.status === 'success') {
+            this.$router.push('/tes');
           }
         })
         .catch((err) => console.log(err));
     },
+
   },
 };
 </script>
@@ -103,5 +108,17 @@ export default {
     width: 120px;
     height: auto;
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition-duration: 0.3s;
+  transition-property: opacity;
+  transition-timing-function: ease;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0
 }
 </style>

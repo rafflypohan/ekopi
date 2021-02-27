@@ -16,35 +16,38 @@
         <form action="" @submit.prevent="passes(register)">
           <div class="text-left">
             <ValidationProvider name="Nama Lengkap" rules="required" v-slot="{ errors }">
-              <t-input-group label="Nama Lengkap" class="mx-5 my-3">
+              <t-input-group :variant="errors[0] ? 'danger' : ''" label="Nama Lengkap" class="mx-5 my-3">
                 <t-input :variant="errors[0] ? 'danger' : ''" v-model="nama" />
                 <span class="block text-sm text-red-500"> {{ errors[0] }} </span>
               </t-input-group>
             </ValidationProvider>
 
             <ValidationProvider name="Email" rules="required|email" v-slot="{ errors }">
-              <t-input-group label="Email" class="mx-5 my-3" feedback="contoh: example@email.com">
+              <t-input-group :variant="errors[0] ? 'danger' : ''" label="Email" class="mx-5 my-3" description="contoh: example@email.com">
                 <t-input :variant="errors[0] ? 'danger' : ''" type="email" v-model="email" />
                 <span class="block text-sm text-red-500"> {{ errors[0] }} </span>
               </t-input-group>
             </ValidationProvider>
 
             <ValidationProvider name="Password" rules="required|min:8" v-slot="{ errors }" vid="pass">
-              <t-input-group label="Password" class="mx-5 my-6">
+              <t-input-group :variant="errors[0] ? 'danger' : ''" label="Password" class="mx-5 my-6">
                 <t-input :variant="errors[0] ? 'danger' : ''" class="" type="password" v-model="password" />
                 <span class="block text-sm text-red-500"> {{ errors[0] }} </span>
               </t-input-group>
             </ValidationProvider>
 
             <ValidationProvider name="Konfrimasi Password" rules="required|confirmed:pass" v-slot="{ errors }">
-              <t-input-group label="Konfirmasi Password" class="mx-5 my-6">
+              <t-input-group :variant="errors[0] ? 'danger' : ''" label="Konfirmasi Password" class="mx-5 my-6">
                 <t-input :variant="errors[0] ? 'danger' : ''" class="" type="password" v-model="password_confirm" />
                 <span class="block text-sm text-red-500"> {{ errors[0] }} </span>
               </t-input-group>
             </ValidationProvider>
 
             <div class="mt-6 mx-5 mb-6">
-              <t-button type="submit" class="w-full">Daftar</t-button>
+              <t-button type="submit" class="w-full font-medium" :class="$store.state.status == 'loading' ? 'cursor-not-allowed' : ''" :disabled="$store.state.status == 'loading' ? true : false">
+                <span v-if="$store.state.status == 'loading'"><img class="mx-auto inline" src="@/assets/img/spinner.svg" alt=""/></span>
+                <span v-else>Daftar</span>
+              </t-button>
             </div>
 
             <div class="mx-5 mb-8 text-sm">

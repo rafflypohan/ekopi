@@ -1,11 +1,10 @@
 <template>
   <div id="app">
-      <router-view/>
+    <router-view/>
   </div>
 </template>
 
 <script>
-
 export default {
   created(){
     this.$http.interceptors.response.use(undefined, (err) => {

@@ -26,14 +26,6 @@ const routes = [
         component: () => import('@/views/Home.vue')
       },
       {
-        path: '/secure',
-        name: 'secure',
-        component: () => import('@/components/Secure.vue'),
-        meta: {
-          requiresAuth: true
-        }
-      },
-      {
         path: '/tes',
         name: 'tes',
         component: () => import('@/components/TesSucess.vue')

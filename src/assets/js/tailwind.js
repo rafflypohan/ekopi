@@ -70,6 +70,12 @@ const settings = {
         feedback: 'text-gray-400',
         description: 'text-gray-400'
       },
+      variants: {
+        danger: {
+          label: 'text-red-500',
+          feedback: ''
+        },
+      }
     }
   },
   't-checkbox': {
@@ -161,7 +167,7 @@ const settings = {
       
         cancelButton: 'block px-4 py-2 transition duration-100 ease-in-out bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-100 focus:border-gray-100 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed w-full max-w-xs',
         
-        okButton: 'block px-4 py-2 text-white transition duration-100 ease-in-out bg-yellow-500 border border-transparent rounded shadow-sm hover:bg-yellow-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed w-full max-w-xs',
+        okButton: 'block px-4 py-2 text-white transition duration-100 ease-in-out bg-brown-500 border border-transparent rounded shadow-sm hover:bg-brown-600 focus:border-brown-500 focus:ring-2 focus:ring-brown-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed w-full max-w-xs',
       
         inputWrapper: 'mt-3 flex items-center space-x-3',
       

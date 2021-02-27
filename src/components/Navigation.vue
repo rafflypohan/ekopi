@@ -1,13 +1,13 @@
 <template>
-  <main>
-    <t-dropdown tag-name="nav" :classes="{}" :fixed-classes="{}" class="fixed w-full">
+  <div>
+    <t-dropdown id="navbar" tag-name="nav" :classes="{}" :fixed-classes="{}" class="navbar fixed w-full">
       <div slot="trigger" slot-scope="{ mousedownHandler, blurHandler, keydownHandler, isShown }" class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="flex justify-between h-18">
           <div class="flex order-first">
-            <div class="flex items-center mr-2 -ml-2 sm:hidden">
+            <div class="flex items-center mr-2 -ml-2 md:hidden">
               <!-- Mobile menu button -->
               <button
-                class="inline-flex items-center justify-center p-2 text-brown-500 transition duration-150 ease-in-out rounded-md hover:text-white focus:outline-none focus:text-white"
+                class="inline-flex items-center justify-center p-2 text-brown-500 transition duration-150 ease-in-out rounded-md hover:text-brown-600 focus:outline-none focus:text-brown-600"
                 aria-label="Main menu"
                 aria-expanded="false"
                 @mousedown="mousedownHandler"
@@ -27,27 +27,33 @@
                 <img class="block w-auto" src="../assets/img/Logo.png" alt="" srcset="" />
               </router-link>
             </div>
-            <div class="hidden sm:ml-6 sm:flex sm:items-center">
-              <router-link to="" tag="a" class="px-3 py-2 ml-4 leading-5 text-brown-500 transition duration-150 ease-in-out rounded-md focus:outline-none">
-                Menu 1
+            <div class="hidden md:ml-6 md:flex md:items-center">
+              <router-link to="/" tag="a" class="px-3 py-2 ml-4 leading-5 hover:text-brown-500 transition duration-150 ease-in-out rounded-md focus:outline-none active-nav">
+                Beranda
               </router-link>
-              <router-link to="" tag="a" class="px-3 py-2 ml-4  leading-5 text-brown-500 transition duration-150 ease-in-out rounded-md focus:outline-none">
-                Menu 2
+              <router-link to="" tag="a" class="px-3 py-2 ml-4  leading-5 hover:text-brown-500 transition duration-150 ease-in-out rounded-md focus:outline-none">
+                Tentang eKopi
+              </router-link>
+              <router-link to="" tag="a" class="px-3 py-2 ml-4  leading-5 hover:text-brown-500 transition duration-150 ease-in-out rounded-md focus:outline-none">
+                Kontak
+              </router-link>
+              <router-link to="/tes" tag="a" class="px-3 py-2 ml-4  leading-5 hover:text-brown-500 transition duration-150 ease-in-out rounded-md focus:outline-none">
+                Tes
               </router-link>
             </div>
           </div>
-          <div class="flex order-last">
-            <div class="hidden sm:ml-6 sm:flex sm:items-center">
+          <div class="flex order-last nav-link">
+            <div class="hidden md:ml-6 md:flex md:items-center">
               <template v-if="isLoggedIn == false">
-                <router-link to="/login" tag="a" class="px-3 py-2 ml-4 leading-5 text-brown-500 transition duration-150 ease-in-out rounded-md focus:outline-none">
+                <router-link to="/login" tag="a" class="px-3 py-2 ml-4 leading-5 hover:text-brown-500 transition duration-150 ease-in-out rounded-md focus:outline-none ">
                   Masuk
                 </router-link>
-                <router-link to="/register" tag="a" class="px-5 py-3 ml-4 leading-5 text-gray-50 bg-brown-500 transition duration-150 ease-in-out font-medium rounded-md hover:bg-brown-400 focus:outline-none">
-                  Daftar
+                <router-link to="/register" tag="a" class="px-5 py-3 ml-4 leading-5 text-gray-50 bg-brown-500 transition duration-150 ease-in-out font-medium rounded-3xl hover:bg-brown-400 focus:outline-none">
+                  Coba Gratis
                 </router-link>
               </template>
               <template v-else>
-                <router-link id="logout" to="" tag="a" class="px-3 py-2 ml-4 leading-5 text-brown-500 transition duration-150 ease-in-out rounded-md focus:outline-none" @click.native="logout">
+                <router-link id="logout" to="" tag="a" class="px-3 py-2 ml-4 leading-5 hover:text-brown-500 transition duration-150 ease-in-out rounded-md focus:outline-none" @click.native="logout">
                   Keluar
                 </router-link>
               </template>
@@ -56,25 +62,25 @@
         </div>
       </div>
 
-      <div class="sm:hidden">
+      <div class="md:hidden">
         <div class="px-2 pt-2 pb-3 sm:px-3">
           <router-link
             to="/login"
             tag="a"
-            class="block px-3 py-2 mt-1 text-base text-blue-300 transition duration-150 ease-in-out rounded-md hover:text-white hover:bg-blue-700 focus:outline-none focus:text-white focus:bg-blue-700"
+            class="block px-3 py-2 mt-1 text-base  transition duration-150 ease-in-out rounded-md hover:text-brown-500 focus:outline-none focus:bg-gray-50"
           >
-            Login</router-link
+            Masuk</router-link
           >
           <router-link
             to="/register"
             tag="a"
-            class="block px-3 py-2 mt-1 text-base text-blue-300 transition duration-150 ease-in-out rounded-md hover:text-white hover:bg-blue-700 focus:outline-none focus:text-white focus:bg-blue-700"
-            >Register</router-link
+            class="block px-3 py-2 mt-1 text-base  transition bg-brown-500 text-white duration-150 ease-in-out rounded-md hover:text-white hover:bg-brown-400 focus:outline-none focus:text-white focus:bg-brown-400"
+            >Coba eKopi</router-link
           >
         </div>
       </div>
     </t-dropdown>
-  </main>
+  </div>
 </template>
 <script>
 export default {
@@ -89,7 +95,6 @@ export default {
 
   methods: {
     logout() {
-      // this.$store.dispatch('logout')
       this.$dialog
         .confirm({
           title: 'Keluar',
@@ -97,8 +102,6 @@ export default {
           icon: 'info',
           okButtonText: 'Yakin',
           cancelButtonText: 'Batal',
-          // variant: 'my-confirm',
-          // ...More props
         })
         .then((result) => {
           console.log(result)
@@ -108,13 +111,36 @@ export default {
         });
     },
   },
+  mounted(){
+    this.$nextTick(function() {
+      window.addEventListener("scroll", function() {
+        const navbar = document.getElementById("navbar");
+        const nav_classes = navbar.classList;
+        if (document.documentElement.scrollTop >= 80) {
+          if (nav_classes.contains("shrink") === false) {
+            nav_classes.toggle("shrink");
+          }
+        } else {
+          if (nav_classes.contains("shrink") === true) {
+            nav_classes.toggle("shrink");
+          }
+        }
+      });
+    });
+  }
 };
 </script>
 <style lang="scss" scoped>
+.navbar.shrink{
+  box-shadow: 0px 2px 12px 0px rgba(0,0,0,0.10);
+  background: #fff;
+  transition: 0.2s ease;
+}
 .image {
   img {
     width: 100px;
     height: auto;
   }
 }
+
 </style>
