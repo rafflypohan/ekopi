@@ -1,16 +1,42 @@
 <template>
-  <main>
-    <section>
-      <div class="bg-img">
+  <main class="p-8 text-left">
+    
+<!-- Section 1 -->
+<section class="px-2 py-32 bg-white md:px-0">
+  <div class="container items-center max-w-6xl px-8 mx-auto xl:px-5">
+    <div class="flex flex-wrap items-center sm:-mx-3">
+      <div class="w-full md:w-1/2 md:px-3">
+        <div class="w-full pb-6 space-y-6 sm:max-w-md lg:max-w-lg md:space-y-4 lg:space-y-8 xl:space-y-9 sm:pr-5 lg:pr-0 md:pb-0">
+          <h1 class="text-4xl header-font font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-4xl lg:text-5xl xl:text-6xl">
+            <span class="block xl:inline">Beautiful Pages to</span>
+            <span class="block text-indigo-600 xl:inline">Tell Your Story!</span>
+          </h1>
+          <p class="mx-auto text-base text-gray-500 sm:max-w-md lg:text-xl md:max-w-3xl">It's never been easier to build beautiful websites that convey your message and tell your story.</p>
+          <div class="relative flex flex-col sm:flex-row sm:space-x-4">
+            <a href="#_" class="flex items-center w-full px-6 py-3 mb-3 text-lg text-white bg-indigo-600 rounded-md sm:mb-0 hover:bg-indigo-700 sm:w-auto">
+              Try It Free
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+            <a href="#_" class="flex items-center px-6 py-3 text-gray-500 bg-gray-100 rounded-md hover:bg-gray-200 hover:text-gray-600">
+              Learn More
+            </a>
+          </div>
+        </div>
       </div>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel possimus aut explicabo ea quod. Doloribus quidem pariatur repellendus commodi assumenda veritatis exercitationem, sed iure, delectus reprehenderit ducimus accusamus natus doloremque magni eaque harum asperiores nisi magnam dolore ut recusandae fuga aspernatur? Eum adipisci porro molestias magni ullam laudantium? Numquam quia quae ipsum eveniet ratione esse sunt id, voluptas dignissimos accusamus reiciendis fugit, alias omnis vitae suscipit laudantium. Illum optio natus sed consequuntur! Pariatur nemo, sapiente deserunt incidunt placeat natus voluptatem, sint amet dicta iusto quo nam ut quibusdam, esse error aliquam quas. Voluptatibus ullam, hic tenetur voluptate maiores sint et dignissimos facilis, aliquid aliquam ipsum, quia illum? Odit ullam recusandae corporis sapiente adipisci optio obcaecati velit dicta eveniet maxime, facere esse odio dolorem ducimus ea molestiae autem deleniti similique, eaque, praesentium iste quasi. Harum dolor quidem repellendus eveniet nam, doloribus reprehenderit mollitia cum odio et laboriosam culpa rerum temporibus molestiae explicabo deserunt ad maxime corporis? Omnis ea mollitia inventore? Mollitia harum ipsam repellendus consequuntur laborum nobis veritatis voluptate consectetur quisquam, reprehenderit id? Itaque fuga laboriosam, odit quia neque, at magnam ducimus magni illo voluptatibus temporibus quisquam aspernatur doloribus cupiditate voluptate? Pariatur illo molestias neque dignissimos, quaerat necessitatibus nostrum quasi fugiat natus ex quisquam vitae velit? Temporibus, culpa expedita. Dolore necessitatibus rem eveniet iusto quisquam quibusdam rerum modi fugit enim aliquam consequuntur qui molestias tenetur maiores aut asperiores, adipisci quasi unde consequatur odit? Ea veniam architecto asperiores cumque officiis ipsum deleniti doloribus iste est! Amet, porro possimus neque alias nam consectetur voluptatibus consequatur praesentium autem aspernatur officia itaque sint velit reiciendis odio nobis suscipit explicabo accusamus corrupti et, expedita voluptatum. Enim dolor unde, quo impedit hic assumenda sunt recusandae similique dolores ratione quod iusto eos, maxime totam nihil sed rem libero eaque, vitae eius dolorem aspernatur. Quisquam rem ex asperiores aspernatur in sequi magnam obcaecati optio rerum praesentium. Illo, illum sapiente numquam laboriosam doloremque, deleniti voluptatem error facere perspiciatis, minima autem neque perferendis expedita nemo tempora nihil maxime similique modi aut necessitatibus ullam! Reiciendis corrupti totam non quae explicabo quam modi dolorum vitae perferendis ad tempora eum omnis provident minus, itaque commodi animi facilis iusto? Eveniet saepe quis ipsam voluptates, sunt fuga nobis pariatur ipsum soluta corporis culpa iure iusto ea nulla dolorem expedita dicta porro vel dignissimos. Aliquid numquam ratione sapiente! Quod, consequuntur saepe ipsum minima nihil officiis. Soluta fugit, assumenda deserunt dolorem non voluptas corporis eius officiis ut hic?</p>
-    </section>
+      <div class="w-full md:w-1/2">
+        <div class="w-full h-auto overflow-hidden rounded-md shadow-xl sm:rounded-xl">
+            <img src="https://cdn.devdojo.com/images/november2020/hero-image.jpeg">
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
   </main>
 </template>
+
 <style lang="scss" scoped>
 
-</style>
-<style lang="scss" scoped>
 .bg-img{
   height: 100vh;
   width: 100%;

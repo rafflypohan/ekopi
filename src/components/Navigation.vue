@@ -4,7 +4,7 @@
       <div slot="trigger" slot-scope="{ mousedownHandler, blurHandler, keydownHandler, isShown }" class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="flex justify-between h-18">
           <div class="flex order-first">
-            <div class="flex items-center mr-2 -ml-2 md:hidden">
+            <div class="flex items-center mr-2 -ml-2 sm:hidden">
               <!-- Mobile menu button -->
               <button
                 class="inline-flex items-center justify-center p-2 text-brown-500 transition duration-150 ease-in-out rounded-md hover:text-brown-600 focus:outline-none focus:text-brown-600"
@@ -27,28 +27,28 @@
                 <img class="block w-auto" src="../assets/img/Logo.png" alt="" srcset="" />
               </router-link>
             </div>
-            <div class="hidden md:ml-6 md:flex md:items-center">
-              <router-link to="/" tag="a" class="px-3 py-2 ml-4 leading-5 hover:text-brown-500 transition duration-150 ease-in-out rounded-md focus:outline-none active-nav">
+            <div class="nav-link hidden sm:ml-6 sm:flex sm:items-center">
+              <router-link to="/" exact exact-active-class tag="a" class="px-3 py-2 ml-4 leading-5 hover:text-brown-500 transition duration-150 ease-in-out rounded-md focus:outline-none active-link focus:text-brown-600">
                 Beranda
               </router-link>
-              <router-link to="" tag="a" class="px-3 py-2 ml-4  leading-5 hover:text-brown-500 transition duration-150 ease-in-out rounded-md focus:outline-none">
+              <router-link to="#1" exact-active-class tag="a" class="px-3 py-2 ml-4  leading-5 hover:text-brown-500 transition duration-150 ease-in-out rounded-md focus:outline-none focus:text-brown-600">
                 Tentang eKopi
               </router-link>
-              <router-link to="" tag="a" class="px-3 py-2 ml-4  leading-5 hover:text-brown-500 transition duration-150 ease-in-out rounded-md focus:outline-none">
+              <router-link to="#2" exact-active-class tag="a" class="px-3 py-2 ml-4  leading-5 hover:text-brown-500 transition duration-150 ease-in-out rounded-md focus:outline-none focus:text-brown-600">
                 Kontak
               </router-link>
-              <router-link to="/tes" tag="a" class="px-3 py-2 ml-4  leading-5 hover:text-brown-500 transition duration-150 ease-in-out rounded-md focus:outline-none">
+              <router-link to="/tes" exact-active-class tag="a" class="px-3 py-2 ml-4  leading-5 hover:text-brown-500 transition duration-150 ease-in-out rounded-md focus:outline-none focus:text-brown-600">
                 Tes
               </router-link>
             </div>
           </div>
-          <div class="flex order-last nav-link">
-            <div class="hidden md:ml-6 md:flex md:items-center">
+          <div class="flex order-last">
+            <div class="hidden sm:ml-6 sm:flex sm:items-center">
               <template v-if="isLoggedIn == false">
-                <router-link to="/login" tag="a" class="px-3 py-2 ml-4 leading-5 hover:text-brown-500 transition duration-150 ease-in-out rounded-md focus:outline-none ">
+                <router-link to="/login" tag="a" class="px-3 py-2 ml-4 leading-5 hover:text-brown-500 transition duration-150 ease-in-out rounded-md focus:outline-none focus:text-brown-600">
                   Masuk
                 </router-link>
-                <router-link to="/register" tag="a" class="px-5 py-3 ml-4 leading-5 text-gray-50 bg-brown-500 transition duration-150 ease-in-out font-medium rounded-3xl hover:bg-brown-400 focus:outline-none">
+                <router-link to="/register" tag="a" class="px-5 py-3 ml-4 leading-5 text-gray-50 bg-brown-500 transition duration-150 ease-in-out font-medium rounded-3xl hover:bg-brown-400 hover:text-gray-50 focus:outline-none focus:bg-brown-600">
                   Coba Gratis
                 </router-link>
               </template>
@@ -62,7 +62,7 @@
         </div>
       </div>
 
-      <div class="md:hidden">
+      <!-- <div class="md:hidden">
         <div class="px-2 pt-2 pb-3 sm:px-3">
           <router-link
             to="/login"
@@ -78,14 +78,16 @@
             >Coba eKopi</router-link
           >
         </div>
-      </div>
+      </div> -->
     </t-dropdown>
   </div>
 </template>
 <script>
 export default {
   data() {
-    return {};
+    return {
+      active: true,
+    };
   },
   computed: {
     isLoggedIn() {
@@ -104,35 +106,35 @@ export default {
           cancelButtonText: 'Batal',
         })
         .then((result) => {
-          console.log(result)
-          if(result.isOk === true && result.isCancel === false && result.isDismissed === false){
-            this.$store.dispatch('logout')
+          console.log(result);
+          if (result.isOk === true && result.isCancel === false && result.isDismissed === false) {
+            this.$store.dispatch('logout');
           }
         });
     },
   },
-  mounted(){
+  mounted() {
     this.$nextTick(function() {
-      window.addEventListener("scroll", function() {
-        const navbar = document.getElementById("navbar");
+      window.addEventListener('scroll', function() {
+        const navbar = document.getElementById('navbar');
         const nav_classes = navbar.classList;
         if (document.documentElement.scrollTop >= 80) {
-          if (nav_classes.contains("shrink") === false) {
-            nav_classes.toggle("shrink");
+          if (nav_classes.contains('shrink') === false) {
+            nav_classes.toggle('shrink');
           }
         } else {
-          if (nav_classes.contains("shrink") === true) {
-            nav_classes.toggle("shrink");
+          if (nav_classes.contains('shrink') === true) {
+            nav_classes.toggle('shrink');
           }
         }
       });
     });
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
-.navbar.shrink{
-  box-shadow: 0px 2px 12px 0px rgba(0,0,0,0.10);
+.navbar.shrink {
+  box-shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.1);
   background: #fff;
   transition: 0.2s ease;
 }
@@ -143,4 +145,15 @@ export default {
   }
 }
 
+nav {
+  .nav-link {
+    a {
+      &:hover,
+      &.router-link-active,
+      &.router-link-exact-active {
+        color: #966213;
+      }
+    }
+  }
+}
 </style>

@@ -16,6 +16,11 @@ const routes = [
     component: () => import('@/views/Register.vue')
   },
   {
+    path: '/role',
+    name: 'Role',
+    component: () => import('@/views/Role.vue')
+  },
+  {
     path: '/',
     redirect: '/',
     component: () => import('@/views/Main.vue'),

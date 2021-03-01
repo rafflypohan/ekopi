@@ -18,7 +18,7 @@ const settings = {
   't-button':{
     component: TButton,
     props:{
-      classes: 'block px-4 py-2 text-white text-lg transition duration-100 ease-in-out bg-brown-500 border border-transparent rounded shadow-sm hover:bg-brown-600 focus:border-brown-500 focus:ring-2 focus:ring-yellow-900 focus:outline-none focus:ring-opacity-50 disabled:opacity-50',
+      classes: 'block px-4 py-2 text-white text-lg transition duration-100 ease-in-out bg-brown-500 border border-transparent rounded hover:bg-brown-600 focus:border-brown-500 focus:ring-2 focus:ring-yellow-900 focus:outline-none focus:ring-opacity-50 disabled:opacity-50',
       type: 'submit'
     }
   },
